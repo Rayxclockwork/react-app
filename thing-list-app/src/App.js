@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.submitHandler = this.submitHandler.bind(this)
+  }
+  render(){
+    return(
+      <div className = "App" >
+        <List />
+        <Form onSubmit= {this.submitHandler}/>
+      </div>
+    );
+  }
+}
+
+function SnackItem(props) {
+  return <li><p>{props.snack.type}</p></li>
+}
+
+class List extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      snacks: [
+        { id: 412, type: 'Granola bar' },
+        { id: 543, type: 'Ruffles' }
+      ]
+    }
+  }
+  render() {
+    return (
+      this.state.snacks.length &&
+      <ul>
+        {this.state.snacks.map(snack => <SnackItem key={snack.id} snack={snack} />)}
+      </ul>
+    )
+  }
 }
 
 export default App;
