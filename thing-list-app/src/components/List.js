@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Form extends React.Component {
+class ToReadList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { value: '' };
@@ -22,10 +22,14 @@ class Form extends React.Component {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<label>
-					Name:
-			<input type="text" value={this.state.value} onChange={this.handleChange} />
+					Book Title:
+              		<input
+						name="bookTitle"
+						type="text"
+						value={this.state.bookTitle}
+						onChange={this.handleInputChange} />
 				</label>
-				<input type="submit" value="Submit" />
+				<button>submit</button>
 			</form>
 		);
 	}
@@ -33,28 +37,31 @@ class Form extends React.Component {
 
 
 
-function SnackItem(props) {
-	return <li><p>{props.snack.type}</p></li>
+function books(props) {
+	return <li><p>{props.books.type}</p></li>
 }
 
-class List extends React.Component {
+class BookList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			snacks: [
-				{ id: 412, type: 'Granola bar' },
-				{ id: 543, type: 'Ruffles' }
+			books: [
+				{ id:1, type: 'Throne of Glass' },
+				{ id:2, type: 'This Is How It Always Is' }
 			]
 		}
 	}
 	render() {
 		return (
-			this.state.snacks.length &&
+			this.state.books.length &&
 			<ul>
-				{this.state.snacks.map(snack => <SnackItem key={snack.id} snack={snack} />)}
+				{this.state.books.map(books => <BookList key={books.id} books={books} />)}
 			</ul>
 		)
 	}
 }
 
-export default List;
+export {
+	BookList,
+	ToReadList
+}
