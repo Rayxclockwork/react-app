@@ -1,7 +1,8 @@
 import React from 'react';
 
-class Header extends React.Component{
-
-}
-
-export default Header;
+export default props => (
+	<>
+	<h2>Header</h2>
+	<p>{props['thing-count']}</p>
+	</>
+)
