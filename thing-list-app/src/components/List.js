@@ -1,34 +1,55 @@
 import React from 'react';
 
+
+
+export default props => (
+	<>
+		<h1>List of Books I want to Read:</h1>
+		<ul>
+			{props.things.map(thing => <BookItem thing={thing} />)}
+		</ul>
+
+		<ToReadList onCreated={props.onCreated} />
+	</>
+)
+
+
+function BookItem(props) {
+	return <li>{props.things.name}</li>
+}
+
+
+
+
+
 class ToReadList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { value: '' };
 
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.createThing = this.createThing.bind(this);
+		this.changeHandler = this.changeHandler.bind(this);
 	}
 
-	handleChange(event) {
-		this.setState({ value: event.target.value });
-	}
-
-	handleSubmit(event) {
-		alert('A name was submitted: ' + this.state.value);
+	createThing(event) {
 		event.preventDefault();
+		this.props.onCreated({ name: this.state.value });
+		}
+	
+
+	changeHandler(event) {
+		this.setState({
+			value: event.target.value
+		});
 	}
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit}>
-				<label>
-					Book Title:
-              		<input
-						name="bookTitle"
-						type="text"
-						value={this.state.bookTitle}
-						onChange={this.handleInputChange} />
-				</label>
+			<form onCreated={this.createThing}>
+				<fieldset>
+					<legend>Enter Book Title:</legend>
+					<input value={this.state.value} onChange={this.changeHandler} type="text"></input>
+				</fieldset>
 				<button>submit</button>
 			</form>
 		);
@@ -36,32 +57,7 @@ class ToReadList extends React.Component {
 }
 
 
-
-function books(props) {
-	return <li><p>{props.books.type}</p></li>
-}
-
-class BookList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			books: [
-				{ id:1, type: 'Throne of Glass' },
-				{ id:2, type: 'This Is How It Always Is' }
-			]
-		}
-	}
-	render() {
-		return (
-			this.state.books.length &&
-			<ul>
-				{this.state.books.map(books => <BookList key={books.id} books={books} />)}
-			</ul>
-		)
-	}
-}
-
 export {
-	BookList,
+	BookItem,
 	ToReadList
 }
