@@ -6,7 +6,7 @@ export default props => (
 	<>
 		<h1>List of Books I want to Read:</h1>
 		<ul>
-			{props.book.map(book => <BookItem book={book} />)}
+			{props.book.map(book => <BookItem key={book.id} book={book} onDelete={props.onDelete}/>)}
 		</ul>
 
 		<ToReadForm onCreated={props.onCreated} />
@@ -15,7 +15,14 @@ export default props => (
 
 
 function BookItem(props) {
-	return <li><p>{JSON.stringify(props.book)}</p></li>
+	return (
+		<>
+		<li>
+		<p>{props.book.name}</p>
+		<button onClick={() => props.onDelete(props.book)}>delete</button>
+		</li>
+		</>
+	)
 }
 
 
@@ -73,7 +80,6 @@ class ReadList extends React.Component {
 }
 
 export {
-	BookItem,
 	ToReadForm,
 	ReadList
 }

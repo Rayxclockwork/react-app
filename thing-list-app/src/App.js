@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookItem, ToReadForm, ReadList } from './components/List';
+import { ToReadForm, ReadList } from './components/List';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css';
@@ -17,6 +17,7 @@ class App extends React.Component {
     }
     
     this.createThing = this.createThing.bind(this);
+    this.deleteHandler = this.deleteHandler.bind(this);
   }
 
 
@@ -28,7 +29,14 @@ class App extends React.Component {
       books: this.state.books.concat(book)
     })
   }
-
+  deleteHandler(books){
+    // eslint-disable-next-line no-self-compare
+    const newBook = this.state.books.filter(book => book.id !== book.id);
+  
+    this.setState({
+      books : newBook
+    })
+  }
 
   render() {
     return (
