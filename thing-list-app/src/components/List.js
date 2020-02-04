@@ -6,58 +6,74 @@ export default props => (
 	<>
 		<h1>List of Books I want to Read:</h1>
 		<ul>
-			{props.things.map(thing => <BookItem thing={thing} />)}
+			{props.book.map(book => <BookItem book={book} />)}
 		</ul>
 
-		<ToReadList onCreated={props.onCreated} />
+		<ToReadForm onCreated={props.onCreated} />
 	</>
 )
 
 
 function BookItem(props) {
-	return <li>{props.things.name}</li>
+	return <li><p>{JSON.stringify(props.book)}</p></li>
 }
 
 
 
 
 
-class ToReadList extends React.Component {
+class ToReadForm extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { value: '' };
+		this.state = { name : '' };
 
-		this.createThing = this.createThing.bind(this);
+		this.createThing = this.createThing.bind(this)
 		this.changeHandler = this.changeHandler.bind(this);
 	}
 
 	createThing(event) {
 		event.preventDefault();
-		this.props.onCreated({ name: this.state.value });
-		}
-	
+		this.props.onCreated({ book: this.state.name });
+	}
+
 
 	changeHandler(event) {
 		this.setState({
-			value: event.target.value
+			name: event.target.value
 		});
 	}
 
 	render() {
 		return (
-			<form onCreated={this.createThing}>
+			<form onSubmit={this.props.onSubmit}>
 				<fieldset>
 					<legend>Enter Book Title:</legend>
-					<input value={this.state.value} onChange={this.changeHandler} type="text"></input>
+					<input value={this.state.name} onChange={this.changeHandler} type="text"></input>
 				</fieldset>
-				<button>submit</button>
+				<button onClick={this.createThing}>submit</button>
 			</form>
 		);
 	}
 }
 
 
+
+class ReadList extends React.Component {
+	
+
+	render() {
+		return (
+			this.props.bookList.length &&
+			<ul>
+				{this.props.bookList.map(book => <BookItem key={book.id} book={book.book} />)}
+			</ul>
+
+		)
+	}
+}
+
 export {
 	BookItem,
-	ToReadList
+	ToReadForm,
+	ReadList
 }
